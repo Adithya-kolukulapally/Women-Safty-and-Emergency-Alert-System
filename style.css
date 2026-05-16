@@ -1,0 +1,50 @@
+body {
+    font-family: Arial;
+    text-align: center;
+    margin-top: 40px;
+}
+
+h1,h2,h3 {
+    color: #E53935;
+}
+
+button {
+    margin-top: 10px;
+    padding: 15px 30px;
+    background-color: #E53935;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #B71C1C;
+}
+
+.flash {
+    padding: 10px;
+    margin: 10px;
+}
+
+.flash.success {
+    background-color: #c8e6c9;
+}
+
+.flash.error {
+    background-color: #ffcdd2;
+}
+
+.card {
+    display: inline-block;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    background-color: #fff;
+}
+
+.input{
+    padding: 6px;
+    margin: 10px;
+    border-radius: 5px;
+}

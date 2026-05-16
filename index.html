@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Women Safety & Emergency Alert System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+        <div class="flash {{category}}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+{% endwith %}
+
+<!-- LOGIN CARD -->
+{% if page == 'login' %}
+<div class="card">
+    <h2>Login</h2>
+    <form method="POST" action="/login">
+        <input class="input" type="text" name="username" placeholder="Username" required><br>
+        <input class="input" type="password" name="password" placeholder="Password" required><br>
+        <button type="submit">Login</button>
+    </form>
+</div>
+{% endif %}
+
+<!-- DASHBOARD / HOME -->
+{% if page == 'home' %}
+<h1>Women Safety & Emergency Alert System</h1>
+<form id="panicForm" method="POST" action="/panic">
+    <input type="hidden" name="latitude" id="latitude">
+    <input type="hidden" name="longitude" id="longitude">
+
+    <button type="button" id="panicBtn">🚨 Panic Button</button>
+</form>
+
+{% if contacts %}
+<h3>Quick Links for Mobile:</h3>
+<table border="1" cellpadding="10" cellspacing="0" style="margin: 0 auto; border-collapse: collapse;">
+    <tr style="background-color: #E53935; color: white;">
+        <th>Name</th>
+        <th>Call</th>
+        <th>Send SMS</th>
+    </tr>
+    {% for name, phone in contacts %}
+    <tr>
+        <td>{{ name }}</td>
+        <td><a href="tel:{{ phone }}"><button>Call</button></a></td>
+        <td><a href="sms:{{ phone }}?body={{ message_body }}"><button>Send SMS</button></a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+<a href="{{ url_for('contacts') }}">Manage Contacts</a>
+<a href="{{ url_for('logout') }}">Logout</a>
+{% endif %}
+
+<!-- CONTACTS PAGE -->
+{% if page == 'contacts' %}
+<h2>Emergency Contacts</h2>
+<form method="POST" action="/contacts">
+    <input type="text" name="name" placeholder="Contact Name" required>
+    <input type="text" name="phone" placeholder="Phone Number" required>
+    <button type="submit">Add Contact</button>
+</form>
+
+<h3>Saved Contacts</h3>
+<ul>
+    {% for contact in contacts %}
+        <li>{{ contact[1] }} - {{ contact[2] }}</li>
+    {% endfor %}
+</ul>
+
+<a href="{{ url_for('index') }}">Back to Dashboard</a>
+{% endif %}
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
